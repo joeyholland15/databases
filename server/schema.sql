@@ -1,23 +1,31 @@
-CREATE DATABASE chat;
+CREATE DATABASE IF NOT EXISTS chat;
 
 USE chat;
 
-CREATE TABLE messages (
+CREATE TABLE IF NOT EXISTS messages (
   /* Describe your table here.*/
   id INT NOT NULL,
   message_text VARCHAR(100),
-  created_at TIME(0),
+  created_at TIMESTAMP,
   room_id INT,
   user_id INT,
-  PRIMARY KEY(id)
-  /* we have not created ref table yet */
-  -- FOREIGN KEY (room_id) REFERENCES rooms (id),
-  -- FOREIGN KEY (user_id) REFERENCES user (id)
+  PRIMARY KEY(id),
+  FOREIGN KEY (room_id) REFERENCES rooms (id),
+  FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 /* Create other tables and define schemas for them here! */
+CREATE TABLE IF NOT EXISTS users (
+  id INT NOT NULL,
+  username VARCHAR(50),
+  PRIMARY KEY (id)
+);
 
-
+CREATE TABLE IF NOT EXISTS rooms(
+  id INT NOT NULL,
+  roomname VARCHAR(50),
+  PRIMARY KEY (id)
+);
 
 
 /*  Execute this file from the command line by typing:
