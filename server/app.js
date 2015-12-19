@@ -1,5 +1,7 @@
 var express = require('express');
+var cors = require('cors')
 var db = require('./db');
+
 
 // Middleware
 var morgan = require('morgan');
@@ -9,6 +11,7 @@ var parser = require('body-parser');
 var router = require('./routes.js');
 
 var app = express();
+app.use(cors());
 module.exports.app = app;
 
 // Set what we are listening on.

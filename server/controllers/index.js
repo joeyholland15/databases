@@ -1,5 +1,14 @@
 var models = require('../models');
 
+var defaultCorsHeaders = {
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "access-control-allow-headers": "content-type, accept",
+  "access-control-max-age": 10 // Seconds.
+};
+
+var headers = defaultCorsHeaders;
+
 module.exports = {
   messages: {
     get: function (req, res) {
@@ -7,7 +16,9 @@ module.exports = {
       models.messages.get(function(error,results) {
         if(error){
           res.sendStatus(500);
+          res.end(); 
         } else {
+          console.log(results);
           res.send(results);
         }
       });
@@ -15,11 +26,16 @@ module.exports = {
 
 
     post: function (req, res) { // a function which handles posting a message to the database
-      var message = req.body.message
-  
-      console.log("message from controller",message);
-      var roomname = req.body.roomname
-      models.messages.post(message,roomname)
+      var username = req.body.usename;
+      var message = req.body.text;
+      console.log(req.body);
+      models.messages.post(username,message, function(error,results){
+        if(error) {
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        } 
+      });
 
     },
   },
