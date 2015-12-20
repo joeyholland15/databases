@@ -28,7 +28,7 @@ module.exports = {
     post: function (req, res) { // a function which handles posting a message to the database
       var username = req.body.usename;
       var message = req.body.text;
-      console.log(req.body);
+      console.log("resuest body",req.body);
       models.messages.post(username,message, function(error,results){
         if(error) {
           res.sendStatus(500);
